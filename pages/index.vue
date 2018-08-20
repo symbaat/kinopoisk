@@ -133,7 +133,8 @@ export default {
     this.$store.dispatch('loadPopularActors');
     },
 
-    methods:{
+  
+    methods:{  
       move(){
       let slide=document.querySelector(".first-slider");
       slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';

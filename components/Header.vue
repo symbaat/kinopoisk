@@ -1,5 +1,26 @@
 <template>
  <div id="top">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <a href="#" id="scrollToTop">
+    <div class="scrollToTopSection">
+        <div class="scrollToTopButton">
+            <button class="toTop"><i class="fas fa-arrow-up"></i></button>
+            <div id="scrollToTopText">Наверх</div>
+        </div>
+    </div>
+</a>
+ <div class="additional-header">
+     <nuxt-link to="/">
+      <img src="../assets/logo-2.png" class="logo-2">
+     </nuxt-link>
+    <form class="search-form-additional">
+        <div class="inner-form">
+         <input type="text" class="search-input" placeholder="Фильмы, персоны, кинотеатры">
+         <a href="#" class="search-icon"><i class="fas fa-sliders-h"></i></a>
+         <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
+        </div>
+    </form>
+ </div>
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
    <div class="header-top">
     <nuxt-link to="/">
@@ -28,7 +49,54 @@
 </template>
 
 <script>
+export default {
+  data(){
+    return {
+     
+    }
+  },
+  beforeMount(){
+    document.addEventListener('scroll', this.handleScroll);
+     let header=document.getElementById('top');
+     let scrollBar=document.getElementById('scrollToTop');
+     let sticky= header.offsetTop;
+     scrollBar.style.display="none";
 
+     let nav= document.querySelector('.additional-header');
+     nav.style.display="none";
+  },
+  methods: {
+     handleScroll(){
+        console.log('scrolling');
+        this.scrollFunction();
+     },
+     scrollFunction(){
+     let header=document.getElementById('top');
+     let scrollBar=document.getElementById('scrollToTop');
+     let sticky= header.offsetTop;
+     console.log(sticky);
+     let nav= document.querySelector('.additional-header');
+     //nav
+     if(window.pageYOffset>=sticky){
+      header.classList.add('sticky');
+       nav.style.display="block";
+     }
+     else{
+     header.classList.remove('sticky');
+     nav.style.display="none";  
+    }
+    //scroll to top
+     if(window.pageYOffset>=sticky){
+     header.classList.add('sticky');
+     scrollBar.style.display="block";
+     }
+     else{
+     header.classList.remove('sticky');
+     scrollBar.style.display="none";  
+     }
+     }
+  }
+}
 </script>
 
 <style>
@@ -168,6 +236,78 @@ li{
 }
 .link:hover{
     color: white;
+}
+
+/*Scroll to top*/
+#scrollToTopText{
+    font-size: 15px; 
+    color: #fff;
+    background-color: rgba(255, 102, 0, 0.6);
+    width: 50px;
+    font-family: tahoma,verdana,arial;
+    font-size: 12px;
+    width: 63px;
+    height: 27px;
+    text-align: center;
+    line-height: 25px;
+    text-shadow: #000 1px 1px 1px;
+    float: right;
+    margin-top: 10px;
+}
+.toTop{
+    background-color: #f60;
+    border: none;
+    left: 0;
+    width: 27px;
+    height: 27px;
+    margin-right: -8px;
+    margin-top: 10px;
+}
+ .fa-arrow-up{
+    border-top: 2px #fff solid;
+    color:#fff;
+} 
+.scrollToTopSection{
+    width: 100px;
+    height: 100%;
+    position: fixed; 
+    left: 0;   
+    display: flex;  
+    top:0;    
+    
+}
+.scrollToTopButton{
+    width: 100px;
+    height: 100%;    
+    position: fixed;    
+    text-align: center;
+    transition: 0.3s;
+}
+
+.scrollToTopSection:hover > .scrollToTopButton{
+    background: url(https://st1.kp.yandex.net/images/noBrandMenuBg.png);
+    color: black;
+}
+
+.additional-header{
+    position: fixed;
+    background-color: #e3e3e3;
+    height: 40px;
+    width: 850px;
+    display: flex;
+    align-items: center;
+    top: -2px;
+}
+.search-form-additional{
+    width: 360px;
+    height: 27px;
+    margin-left: 200px;
+    margin-top: -38px;
+
+}
+.logo-2{
+    padding: 10px;
+    margin-left: 10px;
 }
 
 </style>
