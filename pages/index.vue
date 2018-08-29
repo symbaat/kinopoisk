@@ -22,6 +22,7 @@
        <span class="next">вперед</span>
      </div>
     </div>
+    <hr class="delimiter">
     <div class="content-header-second">
       <span class="block-title">Скоро на экранах</span>
     </div>
@@ -42,6 +43,7 @@
      <button class="next-btn" @click="next2"><i class="fas fa-caret-right"></i></button>
      </div>
     </div>
+    <hr class="delimiter">  
     <div class="popular-bar">
      <div class="popular-films-title">
       <nuxt-link to="/" class="link-popular-films">Популярные фильмы</nuxt-link>
@@ -65,7 +67,16 @@
      </div>   
       </div>
      </div>
+      <div class="slider-navigation-mobile">
+      <div class="left-btn">
+     <button class="prev-btn" @click="arrowPrev" v-show="showPrev"><i class="fas fa-caret-left"></i></button>  
+     </div>
+     <div class="right-btn">
+     <button class="next-btn" @click="arrowNext" v-show="showNext"><i class="fas fa-caret-right"></i></button>
+     </div>
     </div>
+    </div>
+    <hr class="delimiter"> 
     <div class="popular-bar">
      <div class="popular-films-title">
       <nuxt-link to="/" class="link-popular-films">Популярные персоны</nuxt-link>
@@ -85,13 +96,30 @@
        </nuxt-link> 
         </li>
         <span class="slider-arrow-next" @click="arrowNext2"></span>
-        <span class="slider-arrow-prev" @click="arrowPrev2" v-show="showPrev"></span>
+        <span class="slider-arrow-prev" @click="arrowPrev2" v-show="showPrev2"></span>
      </div>   
       </div>
      </div>
+      <div class="slider-navigation-mobile">
+      <div class="left-btn">
+     <button class="prev-btn" @click="arrowPrev2" v-show="showPrev2"><i class="fas fa-caret-left"></i></button>  
+     </div>
+     <div class="right-btn">
+     <button class="next-btn" @click="arrowNext2" v-show="showNext2"><i class="fas fa-caret-right"></i></button>
+     </div>
     </div>
+    </div>
+     <!-- <div class="main-page-footer">
+       <nuxt-link to="/ratings/">
+         Топ-250 лучших фильмов
+       </nuxt-link>
+    </div> -->
+    <div class="top250">
     <top250></top250>
+    </div>
+    <div class="today-in-cinema">
     <today-in-cinema></today-in-cinema>
+    </div>
   </div>
 </template>
 
@@ -109,7 +137,13 @@ export default {
   data(){
     return {
       offset: 0,
-      showPrev: false
+      offset2: 0,
+      offset3: 0,
+      offset4: 0,
+      showPrev: false,
+      showPrev2: false,
+      showNext: true,
+      showNext2: true
     }
   },
   computed:{
@@ -135,44 +169,39 @@ export default {
 
   
     methods:{  
-      move(){
-      let slide=document.querySelector(".first-slider");
-      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
-      slide.style['transition'] = '.5s ease-in-out';
-      },
       next(){
       let slide=document.querySelector(".first-slider");
       let rect= slide.getBoundingClientRect();
       let right=rect.right;
-      console.log(right); 
-      if(right>=1350){
+      console.log("right: "+right); 
+      if(right>=1370){
       this.offset = (parseInt(this.offset) - 300) + 'px';
-      this.move();
+      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
+      console.log("offset: "+this.offset)
       }
       },
       prev(){
       let slide=document.querySelector(".first-slider");
       let rect= slide.getBoundingClientRect();
-      let left=rect.left;   
-      console.log(left);
-      if(left<=200){
+      let left=rect.left; 
+      let right=rect.right;  
+      console.log("left: "+left);
+      console.log("right:" +right)
+      if(left<=200 && left<0){
       this.offset = (parseInt(this.offset) + 300) + 'px';
-      this.move();
+      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
+      console.log("offset: "+ this.offset);
       }
       },
-      move2(){
-      let slide=document.querySelector(".second-slider");
-      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
-      slide.style['transition'] = '.5s ease-in-out';
-      },
+
       next2(){
       let slide=document.querySelector(".second-slider");
       let rect= slide.getBoundingClientRect();
       let right=rect.right;
       console.log(right); 
-      if(right>=1350){
+      if(right>=1370 && right){
       this.offset = (parseInt(this.offset) - 300) + 'px';
-      this.move2();
+       slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
       }
       },
       prev2(){
@@ -180,46 +209,54 @@ export default {
       let rect= slide.getBoundingClientRect();
       let left=rect.left;   
       console.log(left);
-      if(left<=200){
+      if(left<0 && left<=200){
       this.offset = (parseInt(this.offset) + 300) + 'px';
-      this.move2();
+       slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
       }  
       },
+
+      //popular
       arrowNext(){
       let slide=document.querySelector(".popular-films-slider");   
-      this.offset = (parseInt(this.offset) - 550) + 'px';
-      this.move3(); 
+      let rect = slide.getBoundingClientRect();
+      let right = rect.right;
+      console.log(right);
+      this.offset2 = (parseInt(this.offset2) - 1650) + 'px';
+      slide.style['transform'] = 'translate3d(' + this.offset2 + ', 0, 0)';
+      slide.style['transition'] = '.5s ease-in-out';  
+      this.showNext=false;  
       this.showPrev=true;
-      },
-      move3(){
-      let slide=document.querySelector(".popular-films-slider");
-      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
-      slide.style['transition'] = '.5s ease-in-out';
       },
       arrowPrev(){
       let slide=document.querySelector(".popular-films-slider");
-      this.offset = (parseInt(this.offset) + 550) + 'px';
-      this.move3();
-
+      let rect = slide.getBoundingClientRect();
+      let left = rect.left;
+      console.log(left);
+      this.offset2 = (parseInt(this.offset2) + 1650) + 'px';
+      slide.style['transform'] = 'translate3d(' + this.offset2 + ', 0, 0)';
+      slide.style['transition'] = '.5s ease-in-out'; 
+      this.showNext=true;  
+      this.showPrev=false;
       },
+
       arrowNext2(){
       let slide=document.querySelector(".popular-actors-slider");   
-      this.offset = (parseInt(this.offset) - 550) + 'px';
-      this.move4(); 
-      this.showPrev=true;
-      },
-      move4(){
-      let slide=document.querySelector(".popular-actors-slider");
-      slide.style['transform'] = 'translate3d(' + this.offset + ', 0, 0)';
+      this.offset3 = (parseInt(this.offset3) - 1650) + 'px';
+      slide.style['transform'] = 'translate3d(' + this.offset3 + ', 0, 0)';
       slide.style['transition'] = '.5s ease-in-out';
+      this.showPrev2=true;
+      this.showNext2=false;  
+      
       },
       arrowPrev2(){
       let slide=document.querySelector(".popular-actors-slider");
-      this.offset = (parseInt(this.offset) + 550) + 'px';
-      this.move4();
-
+      this.offset3 = (parseInt(this.offset3) + 1650) + 'px';
+      slide.style['transform'] = 'translate3d(' + this.offset3 + ', 0, 0)';
+      slide.style['transition'] = '.5s ease-in-out';
+      this.showNext2=true;  
+      this.showPrev2=false;
       }
-    }    
+    }     
 }
 </script>
 
@@ -232,6 +269,7 @@ export default {
   padding: 0;
   background-color: #fff;
   box-shadow: -6px 10px 20px 0px rgba(0, 0, 0, 0.2);
+  flex-flow: row wrap;
 }
 .content-header{
   height: 56px;
@@ -257,7 +295,7 @@ export default {
    width: 850px;  
  }
 .first-slider{
-  width: 4750px;
+  width: 4700px;
   height: 300px;
   display: flex;
   position: relative;
@@ -378,10 +416,20 @@ export default {
   margin-top: 20px;
   margin-left: 20px;
 }
+.popular-actors-content{
+  overflow: hidden;
+  width: 535px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
 .popular-bar{
   width: 555px;
 }
 .popular-film{
+  display: flex;
+}
+.popular-actor{
   display: flex;
 }
 .popfilm-image{
@@ -415,8 +463,9 @@ export default {
   width: 45px;
   background-color: rgba(0, 0, 0, 0.7);
   transition: background .2s ease;
-  left: 507px;
+  left: 500px;
 }
+
 .slider-arrow-next:after{
   background-image: url(https://st1.kp.yandex.net/img/images-arrow-left.png);
   background-repeat: no-repeat;
@@ -429,6 +478,7 @@ export default {
   margin: 64px 0 0 18px;
   transition: opacity .2s ease;
 }
+
 .slider-arrow-prev{
   position: absolute;
   cursor: pointer;
@@ -436,7 +486,7 @@ export default {
   width: 45px;
   background-color: rgba(0, 0, 0, 0.7);
   transition: background .2s ease;
-  left: 550px;
+  right: -1155px;
 }
 .slider-arrow-prev:after{
   background-image: url(https://st1.kp.yandex.net/img/images-arrow-right.png);
@@ -449,6 +499,106 @@ export default {
   height: 16px;
   margin: 64px 0 0 18px;
   transition: opacity .2s ease;
+}
+
+.delimiter{
+  display: none;
+}
+.slider-navigation-mobile{
+  display: none;
+}
+
+@media (max-width: 768px) {
+   #content-block{  
+     width: 100%;
+   }
+   .slide-content{
+     width: 100%;
+   }
+   .top250{
+    display: none;
+   }
+   .today-in-cinema{
+     display: none;
+   }
+   .content-header{
+     height: 40px;
+     text-align: left;
+     padding-top: 10px;
+     color: #000;
+   }
+   .block-title{
+     font-size: 16px;
+   }
+   .first-slider{
+    height: 150px;
+    width: 2000px;
+    display: flex;
+    position: relative;
+    width: 3300px;
+}
+
+  .second-slider{
+     height: 150px;
+    display: flex;
+    position: relative;
+    width: 3300px;
+ }
+   .now-playing{
+    height: 150px;
+  
+ }
+    .img-now{
+      height: 150px;
+      width: 110px;
+    }
+  
+  .movie-name{
+   font-size: 14px;
+   font-family: OpenSans, sans-serif;
+   color: #fff;
+}
+  .slider-navigation{
+    width: 100%;
+  }
+  .content-header-second{
+    height: 40px;
+    text-align: left;
+    color: #000;
+    margin-top: 20px;
+  }
+  .popular-bar{
+    width: 100%;
+  }
+  .popular-films-title{
+    width: 100%;
+  }
+  .popular-films-content{
+    width: 100%;
+    margin: 0;
+  }
+  .popular-films-slider{
+    width: 100%;
+  }
+ 
+  .slider-arrow-next{
+   display: none;
+}
+ .slider-arrow-prev{
+   display: none;
+ }
+ .delimiter{
+   display: block;
+   background-color: #f5f5f5;
+   height: 8px;
+   border: none;
+   padding: 0;
+   margin-top: 60px;
+ }
+ .slider-navigation-mobile{
+   display: inline;
+ }
+ 
 }
 
 </style>

@@ -1,14 +1,27 @@
 <template>
  <div class="content-block">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+     <!-- mobile version -->
+     <div class="data-block-mobile">
+     <div class="block-top">
+      <img :src="'http://image.tmdb.org/t/p/w185/'+ actor.profile_path" alt="img" class="actor-img"> 
+      <div class="header-actor">
+       <h1 class="title">{{actor.name}}</h1>
+       <p class="original-title">{{actor.birthday}}</p>
+       <p class="release-date">{{actor.place_of_birth}}</p>
+     </div>
+     </div>
+   </div>
+     <div class="top-block">
      <div class="header">
      <h1 class="title">{{actor.name}}</h1>
      </div>
      <div class="photo-block">
-      <img :src="'http://image.tmdb.org/t/p/w185/'+ actor.profile_path" alt="img" class="film-img"> 
+      <img :src="'http://image.tmdb.org/t/p/w185/'+ actor.profile_path" alt="img" class="actor-img"> 
       <a href="#" class="addFolder"></a>
-      <span class="left-bg"></span>
-      <span class="bottom-bg"><i class="fas fa-caret-right"></i></span>
+      <span class="left-bg-actor"></span>
+      <div class="bottom-bg"></div>
+     </div>
      </div>
      <div class="data-metrika">
       <table>
@@ -91,24 +104,30 @@ export default {
     font-size: 11px;
 }
 
-.left-bg{
+.left-bg-actor{
     position: absolute;
     width: 7px;
     height: 300px;
     background: url(https://st.kp.yandex.net/images/movies/shadow_poster.png) repeat-y scroll 0 0 transparent;
     top: 70px;
     left: 0;
-    margin-left: -5px;
+    margin-left: -10px;
 }
-.bottom-bg i{
-    transform: rotate(-30deg);   
-    color: #555;
-    
+.bottom-bg{
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  
+    border-top: 5px solid #333;
+    transform: rotate(225deg);
+    margin-left: -8px;
+    margin-top: -3px;
 }
 
-.film-img{
+.actor-img{
     width: 205px;
-    margin-left: -7px;
+    margin-left: -9px;
 }
 .movie-buttons{
     display: block;
@@ -174,6 +193,64 @@ export default {
     text-decoration: underline;
     font-size: 11px;
     font-family: tahoma, verdana, arial;
+}
+.data-block-mobile{
+    display: none;
+}
+@media(max-width: 768px){
+    .content-block{
+        width: 100%;    
+    }
+    .data-block{
+        display: none;  
+    }
+    .data-block-mobile{
+        width: 100%;
+        height: 215px;
+        display: flex;
+    }
+    .block-top{
+        display: flex;
+        width: 375px;
+        height: 165px;
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+        width: 100%; 
+    }
+    .header-actor{
+        padding: 0 0 45px 14px; 
+    }
+    .review-area{
+        display: none;
+    }
+    .comment{
+        display: none;
+    }
+    .actor-img{
+        width: 100px;
+        height: 150px;
+        padding: 7px 5px;
+        padding-left: 5px;
+        margin-left: 5px;
+    }
+
+    .title{
+    font-weight: bold;
+    color: #000;
+    font-size: 13px;
+    font-family: tahoma, verdana, arial;
+}
+    .original-title{
+    font-size: 13px;
+    color: #000;
+}
+
+ .data-metrika{
+     display: none;
+ }
+ .top-block{
+     display: none;
+ }
 }
 
 </style>

@@ -34,7 +34,7 @@ beforeMount(){
  right: 10px;
  float: right;
  position: relative;
- top: -600px;
+ top: -585px;
  background-color: #f2f2f2;
  overflow: hidden;
 }

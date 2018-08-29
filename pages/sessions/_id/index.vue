@@ -1,19 +1,18 @@
 <template>
  <div class="content-block">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-  <!-- mobile version -->
-    <div class="data-block-mobile">
+     <!-- mobile version -->
+   <div class="data-block-mobile">
      <div class="block-top">
       <img :src="'http://image.tmdb.org/t/p/w185/'+ localFilms.poster_path" alt="img" class="film-img"> 
-       <i class="fas fa-bookmark"></i>
+       <i class="fas fa-bookmark"></i>  
        <i class="fas fa-check"></i>
       <div class="header-movie">
        <h1 class="title">{{localFilms.title}}</h1>
        <p class="original-title">{{localFilms.original_title}}</p>
        <p class="release-date">{{localFilms.release_date}}</p>
        </div>
-     </div>
-     <span class="movie-header-folder">
+       <span class="movie-header-folder">
            <button class="touch-button">
              <span class="touch-button-content">
                  <span class="folder-btn">
@@ -24,7 +23,14 @@
              </span>
            </button>
        </span>
+     </div>
+      <div class="movie-ticket-btn">     
+         <button class="schedule-ticket-btn">
+             <span class="button-content">Расписание и билеты</span>
+             </button>
+     </div> 
    </div>
+
     <div class="description">
         <p class="overview">{{localFilms.overview}}</p>
      </div>
@@ -37,9 +43,12 @@
      <div class="photo-block">
       <img :src="'http://image.tmdb.org/t/p/w185/'+ localFilms.poster_path" alt="img" class="film-img"> 
       <a href="#" class="addFolder"></a>
-      <span class="left-bg-film"></span>
+      <span class="left-bg"></span>
       <div class="bottom-bg"></div>
       <div class="movie-buttons">
+        <div class="movie-schedule">
+       <a href="#" class="schedule-ticket">Расписание и билеты</a>
+       </div>
        <button class="trailer">Трейлер</button>
      </div>
      </div>
@@ -157,9 +166,12 @@ export default {
    background-color: #f2f2f2;
    height: 550px; 
 }
-.header-movie{
-        padding: 0 0 45px 14px; 
- }
+.header{
+    width: 620px;
+    position: relative;
+    padding: 20px 20px 20px 15px;
+}
+
 .title{
     font-weight: normal;
     color: #000;
@@ -178,12 +190,13 @@ export default {
 }
 .addFolder{
     position: absolute;
-    width: 27px;
+    width: 30px;
     background: url(/assets/3.png);
     height: 27px;
     left: 0px;
+    opacity: .8;
 }
-.left-bg-film{
+.left-bg{
     position: absolute;
     width: 7px;
     height: 270px;
@@ -377,11 +390,9 @@ export default {
     font-weight: bold;
     margin-bottom: 20px;
 }
-
 .data-block-mobile{
     display: none;
-}   
-
+}
 .description{
     display: none;
 }
@@ -413,8 +424,9 @@ export default {
     }
     .data-block-mobile{
         width: 100%;
-        height: 160px;
-        display: flex;
+        height: 230px;
+        display: block;
+        border-bottom: 1px solid #ccc;
     }
     .block-top{
         display: flex;
@@ -422,12 +434,10 @@ export default {
         height: 165px;
         border-bottom: 1px solid #ccc;
         padding: 10px;
-        width: 100%; 
+        width: 100%;   
     }
-    .header{
-        margin-top: -110px; 
-        margin-left: 100px;
-        padding: 0; 
+    .header-movie{
+        padding: 0 0 45px 14px; 
     }
     .review-area{
         display: none;
@@ -442,7 +452,6 @@ export default {
         padding-left: 5px;
         margin-left: 5px;
     }
-
     .title{
         font-weight: bold;
         color: #000;
@@ -450,25 +459,36 @@ export default {
         font-family: tahoma, verdana, arial;
 }
     .original-title{
-    font-size: 13px;
-    color: #000;
+        font-size: 14px;
+        color: #000;
 }
-
- .description{
-    display: block;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    border-bottom: 1px solid #ccc;
+    .movie-ticket-btn{
+        padding: 0 16px;
+        margin-top: 10px;
+     }
+    .schedule-ticket-btn{
+        background-color: #fe7609;
+        border: none;
+        color: #fff;
+        font-size: 15px;
+        width: 100%;
+        height: 46px;
+        padding: 0 20px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .description{
+       display: block;
+       padding-left: 10px;
+       padding-top: 10px;
+       padding-right: 10px;
+       padding-bottom: 10px;
+       border-bottom: 1px solid #ccc;
 
 }
  .overview{
-     font-family: "arial", sans-serif;
-     font-size: 12px;
- }
- .tailer{
-     padding: 0 20px;
+      font-family: "arial", sans-serif;
+      font-size: 12px;
  }
  .movie-header-folder{
      position: absolute;

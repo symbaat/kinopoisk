@@ -1,5 +1,6 @@
 <template>
  <div id="top">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <a href="#" id="scrollToTop">
     <div class="scrollToTopSection">
@@ -9,7 +10,7 @@
         </div>
     </div>
 </a>
- <div class="additional-header">
+ <div class="additional-header" v-show="header">
      <nuxt-link to="/">
       <img src="../assets/logo-2.png" class="logo-2">
      </nuxt-link>
@@ -17,20 +18,71 @@
         <div class="inner-form">
          <input type="text" class="search-input" placeholder="Фильмы, персоны, кинотеатры">
          <a href="#" class="search-icon"><i class="fas fa-sliders-h"></i></a>
-         <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
+         <a href="#" class="search-icon" ><i class="fas fa-search"></i></a>
         </div>
     </form>
  </div>
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+   <!-- mobile version -->
+   <div class="toggle-menu" v-show="headerShow">
+       <div class="header-left">
+       <i class="fas fa-bars" @click="toggleShow" v-show="showMenu"></i>
+       <i class="fas fa-times" v-show="closeMenu" @click="close"></i>
+       <nuxt-link to="/">
+      <img src="../assets/logo.png" class="logo">
+      </nuxt-link>
+     </div>
+     <div class="header-right">
+        <div class="right-side">
+      <a class="search-icon" @click="showSearch"><i class="fas fa-search"> </i></a>
+      <div class="user-header">
+      <button class="userBtn">Войти</button>
+      </div>
+      </div>
+     </div>
+      <div class="navigation-menu" v-show="navShow">
+     <nav class="header-nav-block" >
+          <ul class="nav-links-block">
+              <li class="link-item"><nuxt-link to="/films" class="link">Афиша</nuxt-link></li>
+              <li class="link-item"><nuxt-link to="/films" class="link">Фильмы</nuxt-link></li>
+              <li class="link-item"><nuxt-link to="/" class="link">Рейтинги</nuxt-link></li>
+              <li class="link-item"><nuxt-link to="/" class="link">Журнал</nuxt-link></li>
+              <li class="link-item"><nuxt-link to="/" class="link">Онлайн</nuxt-link></li>
+          </ul>
+      </nav>
+      </div>
+   </div>
+  <div class="overlay" v-show="searchBar">
+   <div class="header-search">
+     <form class="search-form-mobile">
+        <div class="left-header">
+          <nuxt-link to="/search">
+             <button @click="search" class="search-icon-btn">
+              <i class="fas fa-search"></i>
+             </button>
+             </nuxt-link> 
+    </div>
+        <input type="text" class="search-input-mobile" v-model="searchInput" v-on:keyup.enter="search">
+     </form>
+     <div class="right-header">
+     <i class="fas fa-times" @click="close"></i>
+    </div>
+   </div>
+   </div>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
    <div class="header-top">
     <nuxt-link to="/">
       <img src="../assets/logo.png" class="logo">
      </nuxt-link>
     <form class="search-form">
         <div class="inner-form">
-         <input type="text" class="search-input" placeholder="Фильмы, персоны, кинотеатры">
+         <input type="text" class="search-input" placeholder="Фильмы, персоны, кинотеатры" v-model="searchInput" v-on:keyup.13="search">
          <a href="#" class="search-icon"><i class="fas fa-sliders-h"></i></a>
-         <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
+             <nuxt-link to="/search">
+             <button @click="search" class="search-icon-btn">
+              <i class="fas fa-search"></i>
+             </button>
+             </nuxt-link>                
         </div>
     </form>
     <div class="right-header">
@@ -46,14 +98,24 @@
       </nav>
    </div>
   </div>
+
 </template>
 
 <script>
 export default {
   data(){
     return {
-     
+     searchInput: '',
+     navShow: false,
+     closeMenu: false,
+     showMenu: true,
+     header: false,
+     searchBar: false,
+     headerShow: true
     }
+  },
+  computed: {
+   
   },
   beforeMount(){
     document.addEventListener('scroll', this.handleScroll);
@@ -63,9 +125,35 @@ export default {
      scrollBar.style.display="none";
 
      let nav= document.querySelector('.additional-header');
-     nav.style.display="none";
+     nav.style.display="none";    
   },
   methods: {
+       
+       search(){
+          console.log('search');
+          this.$store.dispatch('search/loadSearchingFilms', this.searchInput)
+          console.log(this.searchInput)
+          this.searchBar=!this.searchBar;
+          this.headerShow=true;
+       },
+
+       toggleShow(){
+          this.navShow=!this.navShow;
+          this.closeMenu=true;
+          this.showMenu=false;
+       },
+       close(){
+          this.navShow=false;
+          this.showMenu=true;
+          this.closeMenu=false;
+          this.headerShow=true;
+          this.searchBar=false;
+       },
+       showSearch(){
+          this.searchBar=!this.searchBar;
+          this.headerShow=false;
+       },
+
      handleScroll(){
         console.log('scrolling');
         this.scrollFunction();
@@ -75,16 +163,16 @@ export default {
      let scrollBar=document.getElementById('scrollToTop');
      let sticky= header.offsetTop;
      console.log(sticky);
-     let nav= document.querySelector('.additional-header');
-     //nav
-     if(window.pageYOffset>=sticky){
-      header.classList.add('sticky');
-       nav.style.display="block";
-     }
-     else{
-     header.classList.remove('sticky');
-     nav.style.display="none";  
-    }
+    //  let nav= document.querySelector('.additional-header');
+    //  //nav
+    // //  if(window.pageYOffset>=sticky){
+    // //   header.classList.add('sticky');
+    // //    nav.style.display="block";
+    // //  }
+    // //  else{
+    // //  header.classList.remove('sticky');
+    //  nav.style.display="none";  
+    // //}
     //scroll to top
      if(window.pageYOffset>=sticky){
      header.classList.add('sticky');
@@ -107,6 +195,8 @@ export default {
    position: relative;
    z-index: 20;   
    background-color: rgba(68,68,68,0.95);
+   flex-flow: row wrap;
+   display: block;
 }
 .header-top{
    padding-left: 32px;
@@ -141,10 +231,14 @@ export default {
     margin: 0;
     height: 100%;
     box-sizing: border-box;
-    color: rgba(255,255,255,0.7);
+    color: #333;
     font-family: "Graphik LC Web, Arial,sans-serif";
     font: 400 13.3333px Arial;
     transition: opacity 0.1s ease;
+    outline: 0;
+}
+.search-input::placeholder{
+    color: rgba(168, 163, 163, 0.7);
 }
 
 .search-icon{
@@ -155,6 +249,9 @@ export default {
     padding-right: 5px;
     padding-left: 5px;
     color: rgba(168, 163, 163, 0.7);
+    border: none;
+    cursor: pointer;
+
 }
 .search-icon>i{
     background-size: 24px 24px;
@@ -165,6 +262,27 @@ export default {
     margin: 0 auto;
     padding-top: 7px;   
     transition: opacity 0.1s ease;
+}
+.fa-search{
+    background-size: 24px 24px;
+    height: 100%;
+    width: 24px;
+    background-position: center;
+    font-size: 18px;
+    margin: 0 auto;
+      
+    transition: opacity 0.1s ease;
+}
+.search-icon-btn{
+    margin:0;
+    height: 100%;
+    display: inline-block;
+    background-color: transparent;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: rgba(168, 163, 163, 0.7);
+    border: none;
+    cursor: pointer;
 }
 
 .right-header{
@@ -204,6 +322,7 @@ export default {
 }
 .header-nav{
     height: 100%;
+    display: block;
 }
 ul{
     list-style: none;
@@ -309,5 +428,173 @@ li{
     padding: 10px;
     margin-left: 10px;
 }
+
+.header-search{
+    height: 52px;
+    width: 100%;
+    margin: 0;
+    background-color: #444;
+    display: none;
+}
+
+/* MOBILE */
+.toggle-menu{
+    display: none;
+    height: 52px;
+}
+.fa-bars{
+    color: rgba(255,255,255,0.7);
+    height: 52px;
+    width: 52px;
+    background-position: 16px 19px;
+    background-size: 20px 14px;
+    padding: 15px;
+}
+.fa-times{
+    color: rgba(255,255,255,0.7);
+    height: 52px;
+    width: 52px;
+    background-position: 16px 19px;
+    background-size: 20px 14px;
+    padding: 15px;
+}
+.header-left{
+    padding-left: 4px;
+    height: 100%;
+    display: flex;
+    float: left;
+}
+.header-right{
+    padding-right: 4px;
+    float: right;
+    height: 100%;
+}
+.right-side{
+    margin-top: 7px;
+    display: flex;
+}
+.user-header{
+    height: 100%;
+    margin-right: 3px;
+    padding-left: 11px;
+    padding-right: 11px;
+    position: relative;
+}
+.navigation-menu{
+    background-color: #4d4d4d;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    position: fixed;
+    margin: 52px auto auto;
+    height: 300px;
+    width: 375px;
+    transition: 0.2s ease-in;
+}
+
+.search-input-mobile{
+    background-color: #444;
+    border: none;
+    color: #fff;
+    height: 52px;
+    line-height: 18px;
+    padding: 17px 2px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+    outline: 0;
+}
+
+
+
+@media(max-width:768px){
+    #top{
+        height: 52px;
+        width: 100%;
+        margin: 0;
+        background-color: #444;
+    }
+    .toggle-menu{
+      display: block;
+    }
+    .logo{
+        height: 20px;
+        margin-top: 13px;
+    }
+    .additional-header{
+        display: none;
+    }
+    #scrollToTop{
+        display: none;
+    }
+    .scrollToTopSection{
+        display: none;
+    }
+    .header-top{
+        display: none;
+    }
+    .header-bottom{
+        display: none;
+    }
+    .userBtn{
+        color: #fff;
+        opacity: 0.5;
+        font-family: "Arial", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        height: 100%;
+        margin-top: 7px;
+    
+    }
+    .overlay{
+        top: 0;
+        bottom: 0;
+        left:0;
+        position: fixed;
+        background-color: rgba(0,0,0,0.85);
+        width: 100%;
+        transition: .2s ease-in-out;
+    }
+    .fa-search{
+        width: 24px;
+        height: 100%;
+    }
+    .link{
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 24px;
+        padding-top: 9px;
+        padding-bottom: 11px;
+    }
+    .header-search{
+        display: flex;
+    }
+    .right-header{
+        float: right;
+        padding-right: 4px;
+    }
+    .left-header{
+        float: left;
+        padding: 7px;
+        padding-top: 15px;
+        padding-left: 15px;
+
+    }
+    .search-form-mobile{
+        display: flex;
+    }
+    
+}
+
+@media screen and (max-width: 849px){
+    #top{
+        width: 100%;
+    }
+    .search-form{
+        width: 100%;
+    }
+}
+
 
 </style>

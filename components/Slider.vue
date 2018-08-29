@@ -1,5 +1,5 @@
 <template>
- <nuxt-link :to="'/films/'+id">
+ <nuxt-link :to="'/sessions/'+id">
     <div class="now-playing">  
        <div class="movie-title">
         <p class="movie-name">{{title}}</p>
