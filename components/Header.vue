@@ -94,6 +94,7 @@
           <ul class="nav-links">
               <li class="link-item"><nuxt-link to="/films" class="link">Фильмы</nuxt-link></li>
               <li class="link-item"><nuxt-link to="/ratings" class="link">Рейтинги</nuxt-link></li>
+              <li class="link-item"><nuxt-link to="/favorites" class="link">Избранные</nuxt-link></li>
           </ul>
       </nav>
    </div>
@@ -135,6 +136,7 @@ export default {
           console.log(this.searchInput)
           this.searchBar=!this.searchBar;
           this.headerShow=true;
+          console.log("clicked");
        },
 
        toggleShow(){

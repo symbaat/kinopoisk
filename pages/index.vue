@@ -1,27 +1,28 @@
 <template>
   <div id="content-block">
     <div class="content-header">
-      <span class="block-title">Сегодня в кино</span>
+        <span class="block-title">Сегодня в кино</span>
     </div>
     <div class="slide-content">
-     <div class="first-slider">   
-      <Slider v-for="(movie) in movies" :key="movie.id"
+        <div class="first-slider">   
+        <Slider v-for="(movie) in movies" :key="movie.id"
              :id="movie.id" 
              :title="movie.title"
-             :poster="movie.poster_path"        
-      ></Slider>    
+             :poster="movie.poster_path">
+        </Slider>    
      </div>
     </div>
     <div class="slider-navigation">
-      <div class="left-btn">
-     <button class="prev-btn" @click="prev"><i class="fas fa-caret-left"></i></button>
-       <span class="prev">назад</span>
-     </div>
-     <div class="right-btn">
-     <button class="next-btn" @click="next"><i class="fas fa-caret-right"></i></button>
-       <span class="next">вперед</span>
-     </div>
+        <div class="left-btn">
+            <button class="prev-btn" @click="prev"><i class="fas fa-caret-left"></i></button>
+            <span class="prev">назад</span>
+        </div>
+        <div class="right-btn">
+            <button class="next-btn" @click="next"><i class="fas fa-caret-right"></i></button>
+            <span class="next">вперед</span>
+        </div>
     </div>
+
     <hr class="delimiter">
     <div class="content-header-second">
       <span class="block-title">Скоро на экранах</span>
@@ -29,19 +30,19 @@
     <div class="slide-content">
     <div class="second-slider">
     <Slider v-for="(newmovie) in newmovies" :key="newmovie.id" 
-             :title="newmovie.title"
-             :poster="newmovie.poster_path"
-             :id="newmovie.id"
+            :title="newmovie.title"
+            :poster="newmovie.poster_path"
+            :id="newmovie.id"
      ></Slider>
    </div>
    </div>
     <div class="slider-navigation">
-      <div class="left-btn">
-     <button class="prev-btn" @click="prev2"><i class="fas fa-caret-left"></i></button>  
-     </div>
-     <div class="right-btn">
-     <button class="next-btn" @click="next2"><i class="fas fa-caret-right"></i></button>
-     </div>
+        <div class="left-btn">
+            <button class="prev-btn" @click="prev2"><i class="fas fa-caret-left"></i></button>  
+        </div>
+        <div class="right-btn">
+            <button class="next-btn" @click="next2"><i class="fas fa-caret-right"></i></button>
+        </div>
     </div>
     <hr class="delimiter">  
     <div class="popular-bar">
@@ -49,64 +50,67 @@
       <nuxt-link to="/" class="link-popular-films">Популярные фильмы</nuxt-link>
      </div>
      <div class="popular-films-content">
-      <div class="popular-films-slider">
-        <div class="popular-film"> 
-        <li v-for="popfilm in popfilms" :key="popfilm.id" class="slider-item"> 
-        <nuxt-link :to="'/films/'+popfilm.id" class="popfilm-link">
-       <div class="popfilm-image">
-       <img :src="'http://image.tmdb.org/t/p/w92/'+ popfilm.poster_path" alt="img" class="img-popfilm">
-       </div>
-       <div class="popfilm-title">
-        <p class="popfilm-name">{{popfilm.title}}</p>
-        <p class="original-title">{{popfilm.original_title}}</p>
-       </div>
-       </nuxt-link> 
-        </li>
-        <span class="slider-arrow-next" @click="arrowNext"></span>
-        <span class="slider-arrow-prev" @click="arrowPrev" v-show="showPrev"></span>
-     </div>   
-      </div>
+        <div class="popular-films-slider">
+            <div class="popular-film"> 
+            <li v-for="popfilm in popfilms" :key="popfilm.id" class="slider-item"> 
+            <nuxt-link :to="'/films/'+popfilm.id" class="popfilm-link">
+                <div class="popfilm-image">
+                    <img :src="'http://image.tmdb.org/t/p/w92/'+ popfilm.poster_path" alt="img" class="img-popfilm">
+                </div>
+                <div class="popfilm-title">
+                    <p class="popfilm-name">{{popfilm.title}}</p>
+                    <p class="original-title">{{popfilm.original_title}}</p>
+                </div>
+            </nuxt-link> 
+            </li>
+            <span class="slider-arrow-next" @click="arrowNext"></span>
+            <span class="slider-arrow-prev" @click="arrowPrev" v-show="showPrev"></span>
+        </div>   
+        </div>
      </div>
       <div class="slider-navigation-mobile">
-      <div class="left-btn">
-     <button class="prev-btn" @click="arrowPrev" v-show="showPrev"><i class="fas fa-caret-left"></i></button>  
-     </div>
-     <div class="right-btn">
-     <button class="next-btn" @click="arrowNext" v-show="showNext"><i class="fas fa-caret-right"></i></button>
-     </div>
+        <div class="left-btn">
+            <button class="prev-btn" @click="arrowPrev" v-show="showPrev"><i class="fas fa-caret-left"></i></button>  
+        </div>
+        <div class="right-btn">
+            <button class="next-btn" @click="arrowNext" v-show="showNext"><i class="fas fa-caret-right"></i></button>
+        </div>
     </div>
     </div>
+
     <hr class="delimiter"> 
+
     <div class="popular-bar">
-     <div class="popular-films-title">
-      <nuxt-link to="/" class="link-popular-films">Популярные персоны</nuxt-link>
-     </div>
+        <div class="popular-films-title">
+            <nuxt-link to="/" class="link-popular-films">Популярные персоны</nuxt-link>
+        </div>
      <div class="popular-films-content">
-      <div class="popular-actors-slider">
-        <div class="popular-film"> 
-        <li v-for="popactor in popactors" :key="popactor.id" class="slider-item"> 
-        <nuxt-link :to="'/actors/'+popactor.id" class="popfilm-link">
-       <div class="popfilm-image">
-       <img :src="'http://image.tmdb.org/t/p/w92/'+ popactor.profile_path" alt="img" class="img-popfilm">
-       </div>
-       <div class="popfilm-title">
-        <p class="popfilm-name">{{popactor.name}}</p>
-        <p class="original-title">{{popactor.original_title}}</p>
-       </div>
-       </nuxt-link> 
-        </li>
-        <span class="slider-arrow-next" @click="arrowNext2"></span>
-        <span class="slider-arrow-prev" @click="arrowPrev2" v-show="showPrev2"></span>
-     </div>   
-      </div>
+        <div class="popular-actors-slider">
+            <div class="popular-film"> 
+            <li v-for="popactor in popactors" :key="popactor.id" class="slider-item"> 
+                <nuxt-link :to="'/actors/'+popactor.id" class="popfilm-link">
+                    <div class="popfilm-image">
+                        <img :src="'http://image.tmdb.org/t/p/w92/'+ popactor.profile_path" alt="img" class="img-popfilm">
+                    </div>
+                    <div class="popfilm-title">
+                        <p class="popfilm-name">{{popactor.name}}</p>
+                        <p class="original-title">{{popactor.original_title}}</p>
+                    </div>
+                </nuxt-link> 
+            </li>
+                <span class="slider-arrow-next" @click="arrowNext2"></span>
+                <span class="slider-arrow-prev" @click="arrowPrev2" v-show="showPrev2"></span>
+            </div>   
+        </div>
      </div>
+
       <div class="slider-navigation-mobile">
-      <div class="left-btn">
-     <button class="prev-btn" @click="arrowPrev2" v-show="showPrev2"><i class="fas fa-caret-left"></i></button>  
-     </div>
-     <div class="right-btn">
-     <button class="next-btn" @click="arrowNext2" v-show="showNext2"><i class="fas fa-caret-right"></i></button>
-     </div>
+        <div class="left-btn">
+            <button class="prev-btn" @click="arrowPrev2" v-show="showPrev2"><i class="fas fa-caret-left"></i></button>  
+        </div>
+        <div class="right-btn">
+            <button class="next-btn" @click="arrowNext2" v-show="showNext2"><i class="fas fa-caret-right"></i></button>
+        </div>
     </div>
     </div>
      <!-- <div class="main-page-footer">
@@ -299,6 +303,7 @@ export default {
   height: 300px;
   display: flex;
   position: relative;
+  transition: 300ms;
 }
 .second-slider{
   width: 4720px;
@@ -316,6 +321,7 @@ export default {
   position: absolute;
   padding-left: 10px;
   padding-bottom: 10px;  
+  z-index: 1;
 }
 .movie-name{
   font-size: 18px;
@@ -329,17 +335,37 @@ export default {
   margin-right: 13px;
   background-image: linear-gradient(270deg, rgba(30,65,94,0.00) 50%, #1E415E 100%);
 }
-
+.now-playing:after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0, #27629a 92%);
+    transition: 300ms;
+}
+.now-playing:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(14, 43, 138, 0.5);
+    opacity: 0;
+    transition: 300ms;
+}
+.now-playing:hover:before{
+    opacity: 1;
+}
+.now-playing:hover:after{
+    opacity: 0;
+}
 .img-now{
  height: 300px;
  width: 220px;
  border: 0;
- opacity: 1;
-}
-.img-now:hover{
-  opacity: .5;
-  transition: .4s ease-in-out;
-  background: #1E415E;
 }
 .slider-navigation{
   margin: 10px 0;
@@ -349,13 +375,15 @@ export default {
 .left-btn{
   float: left;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   margin-left: 10px;
 }
 .right-btn{
   float: right;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   margin-right: 10px;
 }
 

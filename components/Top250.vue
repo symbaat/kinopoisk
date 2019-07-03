@@ -5,8 +5,8 @@
     
     <li v-for="toprated in toprateds" :key="toprated.id" class="toprated-film">
     <nuxt-link :to="'/films/'+ toprated.id">
-     <p class="toprated-title">{{toprated.title}}</p>
-     <p class="vote-average">{{toprated.vote_average}}</p>
+        <p class="toprated-title">{{toprated.title}}</p>
+        <p class="vote-average">{{toprated.vote_average}}</p>
     </nuxt-link>
     </li>
     

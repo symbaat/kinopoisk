@@ -1,6 +1,11 @@
 # kinopoisk
 
-> My sublime Nuxt.js project
+> My movie Nuxt.js project
+
+Project is written in Vue(Nuxt) including vuex store. The main reason that using the Vuex, because there are common datas that 
+we need to access and recieve in the other components/pages. There are components like header, slider, top250, todayincinema, etc. And pages such as
+index, films, ratings, search, film detail page, actors. 
+
 
 ## Build Setup
 

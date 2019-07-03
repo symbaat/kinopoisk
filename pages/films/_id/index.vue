@@ -175,9 +175,10 @@ export default {
     padding: 0 0 30px 0;
     float: left;
     font-size: 11px;
+    /* padding-top: 30px; */
 }
 .addFolder{
-    position: absolute;
+    position: absolute; 
     width: 27px;
     background: url(/assets/3.png);
     height: 27px;
@@ -249,6 +250,7 @@ export default {
 }
 
 .data-metrika{
+    padding-top: 20px;
     width: 700px;
 }
 .info{
@@ -402,6 +404,9 @@ export default {
     position: absolute;
     margin: 12px 0 0 15px;
     color: #fff;
+}
+.block-top{
+    display: none;
 }
 
 @media(max-width: 768px){

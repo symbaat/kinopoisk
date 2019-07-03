@@ -49,6 +49,7 @@
                          </td>
                        <td class="vote">{{toprated.vote_average}}</td>
                        <td class="popularity">({{toprated.popularity}})</td>
+                       <button class="fav-btn" @click="addFavorites()">Add to fav</button>
                      </tr>
                    </tbody>
                  </table>
@@ -74,6 +75,10 @@ export default{
    Top250,
    TodayInCinema
   },
+  data(){
+    return{
+    }
+  },
   computed:{
     toprateds(){
       return this.$store.state.toprateds;
@@ -82,7 +87,11 @@ export default{
   beforeMount(){
     this.$store.dispatch('loadTopRatedFilms');
   },
-  
+  methods: {
+    addFavorites(){
+      
+    }
+  }
 }
 </script>
 
@@ -188,6 +197,12 @@ td{
   color: #777;
   font-size: 11px;
 }
-
+.fav-btn{
+  border: none;
+  background: none;
+  color: #f60;  
+  font-size: 12px;
+  cursor: pointer;
+}
 
 </style>
